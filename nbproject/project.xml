@@ -1,0 +1,16 @@
+<project xmlns="http://www.netbeans.org/ns/project/1">
+  <type>com.microchip.mplab.nbide.embedded.makeproject</type>
+  <configuration>
+    <data xmlns="http://www.netbeans.org/ns/make-project/1">
+      <name>Final_AMM</name>
+      <creation-uuid>d034195c-3fc1-4bcb-b3cc-770d45c762c4</creation-uuid>
+      <make-project-type>0</make-project-type>
+      <c-extensions>c</c-extensions>
+      <cpp-extensions />
+      <header-extensions>h</header-extensions>
+      <asminc-extensions />
+      <sourceEncoding>ISO-8859-1</sourceEncoding>
+      <make-dep-projects />
+    </data>
+  </configuration>
+</project>
