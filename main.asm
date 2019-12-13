@@ -1,5 +1,4 @@
 ; PIC16F84A Configuration Bit Settings
-
 ; Assembly source line config statements
 
 #include "p16f84a.inc"
@@ -19,9 +18,9 @@ REPIS       EQU 0x0C
 PS0	        EQU 0x00
 PS1	        EQU 0x01
 PS2	        EQU 0x02
-T0IF	    EQU 0x02
+T0IF        EQU 0x02
 PSA	        EQU 0x03
-T0CS	    EQU 0x05
+T0CS        EQU 0x05
 RP0         EQU 0X05
 RP1         EQU 0X06
 
@@ -31,14 +30,13 @@ RP1         EQU 0X06
                 movlw   b'11101111'
                 movwf   PUEB
                 bcf     TMR0,PSA
-		        bsf     TMR0,PS2
-		        bsf     TMR0,PS1
-		        bcf     TMR0,PS0
-		        bcf     TMR0,T0CS
+                bsf     TMR0,PS2
+                bsf     TMR0,PS1
+                bsf     TMR0,PS0
+                bcf     TMR0,T0CS
                 bcf     ESTADO, RP0
                 
-                movlw   .1
-                movwf   REPIS
+                clrf    REPIS
         inicio  bcf     PUEB,4
                 movfw   PUEB
                 sublw   b'00000100'
@@ -85,20 +83,24 @@ RP1         EQU 0X06
                 goto    unlock
                 goto    inicio
         unlock  bsf     PUEB,4
-                call    unsec
-                call    unsec
-                call    unsec
-                call    unsec
-                call    unsec
+                call    cincos
                 goto    inicio
-        unsec   btfss   INTCON, T0IF
-		        goto    unsec
-		        goto    desbor
-	    desbor  incf    REPIS,1
-		        bcf     INTCON, T0IF
-		        btfss   REPIS,5
-		        goto    unsec
-		        movlw   .1
-		        movwf   REPIS
-		        return
+                
+        ;Para contar cinco segundos, el método más sencillo es desbordar el TIMER0 varias veces
+        ;Con un predivisor de 256 y un oscilador de 4 MHz, el desbordamiento ocurre en ~1/16 s
+        ;Esto se obtiene de la fórmula TDesborde = TOsc * 4 * (TMR0 - 256) * Predivisor
+        ;Para cinco segundos, es necesario desbordar el TIMER0 ~76 veces
+        
+        ;Subrutina de Delay(5s)
+        cincos  btfss   INTCON, T0IF
+                goto    cincos
+                goto    desbor
+        desbor  incf    REPIS,1
+                bcf     INTCON, T0IF
+                movfw   REPIS
+                xorlw   .76
+                btfss   ESTADO,2
+                goto    cincos
+                clrf    REPIS
+                return
     END
