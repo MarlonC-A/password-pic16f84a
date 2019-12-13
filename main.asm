@@ -1,5 +1,4 @@
 ; PIC16F84A Configuration Bit Settings
-
 ; Assembly source line config statements
 
 #include "p16f84a.inc"
@@ -31,14 +30,13 @@ RP1         EQU 0X06
                 movlw   b'11101111'
                 movwf   PUEB
                 bcf     TMR0,PSA
-		        bsf     TMR0,PS2
-		        bsf     TMR0,PS1
-		        bcf     TMR0,PS0
-		        bcf     TMR0,T0CS
+                bsf     TMR0,PS2
+                bsf     TMR0,PS1
+                bsf     TMR0,PS0
+                bcf     TMR0,T0CS
                 bcf     ESTADO, RP0
                 
-                movlw   .1
-                movwf   REPIS
+                clrf   REPIS
         inicio  bcf     PUEB,4
                 movfw   PUEB
                 sublw   b'00000100'
@@ -85,20 +83,23 @@ RP1         EQU 0X06
                 goto    unlock
                 goto    inicio
         unlock  bsf     PUEB,4
-                call    unsec
-                call    unsec
-                call    unsec
-                call    unsec
-                call    unsec
+                call    cincosec
                 goto    inicio
-        unsec   btfss   INTCON, T0IF
-		        goto    unsec
-		        goto    desbor
-	    desbor  incf    REPIS,1
-		        bcf     INTCON, T0IF
-		        btfss   REPIS,5
-		        goto    unsec
-		        movlw   .1
-		        movwf   REPIS
-		        return
+                
+        ;Para contar cinco segundos, el método más sencillo es desbordar el TIMER0 varias veces
+        ;Con un predivisor de 256 y un oscilador de 4 MHz, el desbordamiento ocurre en ~1/16 s
+        ;Esto se obtiene de la fórmula TDesborde = TOsc * 4 * (TMR0 - 256) * Predivisor
+        ;Para cinco segundos, es necesario desbordar el TIMER0 ~76 veces
+        
+        cincosec   btfss   INTCON, T0IF
+                goto    cincosec
+                goto    desbor
+        desbor  incf    REPIS,1
+                bcf     INTCON, T0IF
+                movfw REPIS
+                xorlw .76
+                btfss   ESTADO,2
+                goto    cincosec
+                clrf  REPIS
+                return
     END
