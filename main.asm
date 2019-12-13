@@ -18,9 +18,9 @@ REPIS       EQU 0x0C
 PS0	        EQU 0x00
 PS1	        EQU 0x01
 PS2	        EQU 0x02
-T0IF	    EQU 0x02
+T0IF	       EQU 0x02
 PSA	        EQU 0x03
-T0CS	    EQU 0x05
+T0CS	       EQU 0x05
 RP0         EQU 0X05
 RP1         EQU 0X06
 
@@ -91,15 +91,16 @@ RP1         EQU 0X06
         ;Esto se obtiene de la fórmula TDesborde = TOsc * 4 * (TMR0 - 256) * Predivisor
         ;Para cinco segundos, es necesario desbordar el TIMER0 ~76 veces
         
-        cincosec   btfss   INTCON, T0IF
-                goto    cincosec
+        ;Subrutina de Delay(5s)
+        cincos  btfss   INTCON, T0IF
+                goto    cincos
                 goto    desbor
         desbor  incf    REPIS,1
                 bcf     INTCON, T0IF
                 movfw REPIS
                 xorlw .76
                 btfss   ESTADO,2
-                goto    cincosec
+                goto    cincos
                 clrf  REPIS
                 return
     END
