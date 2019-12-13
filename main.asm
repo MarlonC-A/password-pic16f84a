@@ -18,9 +18,9 @@ REPIS       EQU 0x0C
 PS0	        EQU 0x00
 PS1	        EQU 0x01
 PS2	        EQU 0x02
-T0IF	       EQU 0x02
+T0IF        EQU 0x02
 PSA	        EQU 0x03
-T0CS	       EQU 0x05
+T0CS        EQU 0x05
 RP0         EQU 0X05
 RP1         EQU 0X06
 
@@ -36,7 +36,7 @@ RP1         EQU 0X06
                 bcf     TMR0,T0CS
                 bcf     ESTADO, RP0
                 
-                clrf   REPIS
+                clrf    REPIS
         inicio  bcf     PUEB,4
                 movfw   PUEB
                 sublw   b'00000100'
@@ -83,7 +83,7 @@ RP1         EQU 0X06
                 goto    unlock
                 goto    inicio
         unlock  bsf     PUEB,4
-                call    cincosec
+                call    cincos
                 goto    inicio
                 
         ;Para contar cinco segundos, el método más sencillo es desbordar el TIMER0 varias veces
@@ -97,10 +97,10 @@ RP1         EQU 0X06
                 goto    desbor
         desbor  incf    REPIS,1
                 bcf     INTCON, T0IF
-                movfw REPIS
-                xorlw .76
+                movfw   REPIS
+                xorlw   .76
                 btfss   ESTADO,2
                 goto    cincos
-                clrf  REPIS
+                clrf    REPIS
                 return
     END
