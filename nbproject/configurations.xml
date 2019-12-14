@@ -23,16 +23,6 @@
         <languageToolchainVersion>5.84</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
-      <C32CPP>
-        <property key="generate-16-bit-code" value="false" />
-        <property key="generate-micro-compressed-code" value="false" />
-        <property key="additional-warnings" value="false" />
-        <property key="optimization-level" value="-O1" />
-      </C32CPP>
-      <PKOBSKDEPlatformTool>
-        <property key="programoptions.uselvpprogramming" value="true" />
-        <property key="programoptions.eraseb4program" value="true" />
-      </PKOBSKDEPlatformTool>
       <HI-TECH-LINK>
         <property key="link-in-c-library" value="true" />
         <property key="link-in-c-library-gcc" value="" />
@@ -72,16 +62,6 @@
         <languageToolchainVersion>5.84</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
-      <C32CPP>
-        <property key="generate-16-bit-code" value="false" />
-        <property key="generate-micro-compressed-code" value="false" />
-        <property key="additional-warnings" value="false" />
-        <property key="optimization-level" value="-O1" />
-      </C32CPP>
-      <PKOBSKDEPlatformTool>
-        <property key="programoptions.uselvpprogramming" value="true" />
-        <property key="programoptions.eraseb4program" value="true" />
-      </PKOBSKDEPlatformTool>
       <HI-TECH-LINK>
         <property key="link-in-c-library" value="true" />
         <property key="link-in-c-library-gcc" value="" />
