@@ -20,14 +20,14 @@ PAL2        EQU 0x0F
 PAL3        EQU 0x10
 
 ;Declaracion de bits
-PS0	        EQU 0x00
-PS1	        EQU 0x01
-PS2	        EQU 0x02
+PS0         EQU 0x00
+PS1         EQU 0x01
+PS2         EQU 0x02
 T0IF        EQU 0x02
-PSA	        EQU 0x03
+PSA         EQU 0x03
 T0CS        EQU 0x05
-RP0         EQU 0X05
-RP1         EQU 0X06
+RP0         EQU 0x05
+RP1         EQU 0x06
 
     ORG 0
         
