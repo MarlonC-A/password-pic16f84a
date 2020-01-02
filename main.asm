@@ -86,35 +86,33 @@ RP1         EQU 0x06
         paso0   bcf     PUEA,0
                 btfss   PUEA,1
                 goto    paso0
-        paso0r  btfsc   PUEA,1
-                goto    paso0r
                 movfw   PUEB
                 xorwf   PAL0,0
                 btfss   ESTADO,2
-                goto    paso0        
+                goto    paso0
+        paso0r  btfsc   PUEA,1
+                goto    paso0r
                 
         paso1   btfss   PUEA,1
                 goto    paso1
-        paso1r  btfsc   PUEA,1
-                goto    paso1r
                 movfw   PUEB
                 xorwf   PAL1,0
                 btfss   ESTADO,2
-                goto    paso0        
+                goto    paso0
+        paso1r  btfsc   PUEA,1
+                goto    paso1r
                 
         paso2   btfss   PUEA,1
                 goto    paso2
-        paso2r  btfsc   PUEA,1
-                goto    paso2r
                 movfw   PUEB
                 xorwf   PAL2,0
                 btfss   ESTADO,2
                 goto    paso0
+        paso2r  btfsc   PUEA,1
+                goto    paso2r
                 
         paso3   btfss   PUEA,1
                 goto    paso3
-        paso3r  btfsc   PUEA,1
-                goto    paso3r
                 movfw   PUEB
                 xorwf   PAL3,0
                 btfsc   ESTADO,2
@@ -124,12 +122,14 @@ RP1         EQU 0x06
         unlock  bsf     PUEA,0
                 clrf    TMR0
                 call    cincos
+        paso3r  btfsc   PUEA,1
+                goto    paso3r
                 goto    paso0
         
         ;Subrutina de Delay(5s)        
         ;Para contar cinco segundos, el método más sencillo es desbordar el TIMER0 varias veces
         ;Con un predivisor de 256 y un oscilador de 4 MHz, el desbordamiento ocurre en ~1/16 s
-        ;Esto se obtiene de la fórmula TDesborde = TOsc * 4 * (TMR0 - 256) * Predivisor
+        ;Esto se obtiene de la fórmula TDesborde = TOsc * 4 * (256 - TMR0) * Predivisor
         ;Para cinco segundos, es necesario desbordar el TIMER0 ~76 veces
         
         cincos  btfss   INTCON, T0IF
