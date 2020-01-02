@@ -89,7 +89,7 @@ RP1         EQU 0x06
         paso0r  btfsc   PUEA,1
                 goto    paso0r
                 movfw   PUEB
-                xorlw   PAL0
+                xorwf   PAL0,0
                 btfss   ESTADO,2
                 goto    paso0        
                 
@@ -98,7 +98,7 @@ RP1         EQU 0x06
         paso1r  btfsc   PUEA,1
                 goto    paso1r
                 movfw   PUEB
-                xorlw   PAL1
+                xorwf   PAL1,0
                 btfss   ESTADO,2
                 goto    paso0        
                 
@@ -107,7 +107,7 @@ RP1         EQU 0x06
         paso2r  btfsc   PUEA,1
                 goto    paso2r
                 movfw   PUEB
-                xorlw   PAL2
+                xorwf   PAL2,0
                 btfss   ESTADO,2
                 goto    paso0
                 
@@ -116,12 +116,13 @@ RP1         EQU 0x06
         paso3r  btfsc   PUEA,1
                 goto    paso3r
                 movfw   PUEB
-                xorlw   PAL2
+                xorwf   PAL3,0
                 btfsc   ESTADO,2
                 goto    unlock
                 goto    paso0
                 
         unlock  bsf     PUEA,0
+                clrf    TMR0
                 call    cincos
                 goto    paso0
         
