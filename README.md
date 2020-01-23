@@ -1,7 +1,7 @@
 # password-pic16f84a
 **Sistema de contraseña con PIC16F84A o similares**
 
-Este es un sistema de seguridad por medio de contraseña haciendo uso del microcontrolador de *Microchip Technology Inc*, el PIC16F84A. El chip envía una señal lógica ALTA durante cinco segundos cuando una contraseña correcta es ingresada, la cual puede ser acoplada a otro sistema mecánico o eléctrico.
+Este es un sistema de seguridad por medio de contraseña haciendo uso del microcontrolador de *Microchip Technology Inc*, el PIC16F84A. El chip envía una señal lógica ALTA por su pin de salida RA0 (Pin 17) durante cinco segundos cuando una contraseña correcta es ingresada, la cual puede ser acoplada a otro sistema mecánico o eléctrico.
 
 Cada palabra de la contraseña está compuesta por un *nibble* (Cuatro bits), por lo que tiene 2⁴ (16) estados posibles. En el código se incluyen por defecto cuatro palabras para la contraseña, lo que es decir, (2⁴)⁴ (65,536) contraseñas distintas, sin embargo, el código puede adaptarse fácilmente para que cada palabra use un byte (8 bits), permitiendo hasta 4,294,967,296 contraseñas distintas sin necesidad de aumentar el número de palabras, y una cantidad mucho más alta si aumenta el número de palabras por contraseña.
 
