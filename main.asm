@@ -34,6 +34,7 @@ RP1         EQU 0x06
         ;Se usa el Puerto B como entradas de contraseña para que sea sencillo añadir 'palabras' a esta
         ;La salida se encuentra en el Puerto A, el cual puede suministrar un máximo de 20 mA
         ;Para conectar algo más exigente que un LED a la salida, se recomienda usar un optoacoplador
+        ;También se ajusta el Timer0 con un predivisor de 256 y se deshabilitan las interrupciones globales
         
                 bcf     ESTADO, RP1
                 bsf     ESTADO, RP0
@@ -46,11 +47,12 @@ RP1         EQU 0x06
                 bsf     TMR0,PS1
                 bsf     TMR0,PS0
                 bcf     TMR0,T0CS
+                bcf     INTCON,7
                 bcf     ESTADO, RP0
                 clrf    REPIS
                 
         ;Los bloques 'newp#' se usan para ingresar una contraseña nueva
-        ;Esto sólo ocurre la primera vez que inicia el programa, o tras presionar el botón de RESET
+        ;Esto sólo ocurre la primera vez que inicia el programa, o tras un RESET del microcontrolador
         ;Además, 'newp#r' indica que la siguiente instrucción no se debe ejecutar hasta soltar (Release) el boton
         
         newp0   btfss   PUEA,1
@@ -82,6 +84,8 @@ RP1         EQU 0x06
                 goto    newp3r 
              
         ;Los bloques 'paso#' permiten que la contraseña sea ingresada
+        ;La operación XOR es usada para comprobar si el valor ingresado es igual al almacenado
+        ;Si lo son, el resultado de la operación será 0, lo que activará el bit Z (2) del registro ESTADO
            
         paso0   bcf     PUEA,0
                 btfss   PUEA,1
