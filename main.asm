@@ -36,6 +36,11 @@ RP1         EQU 0x06
         ;Para conectar algo más exigente que un LED a la salida, se recomienda usar un optoacoplador
         ;También se ajusta el Timer0 con un predivisor de 256 y se deshabilitan las interrupciones globales
         
+        ;Port B is used as an input for the password, so it is easier to add words to it
+        ;The output is on Port A, which can deliver as much as 20mA
+        ;To connect a load bigger than a LED to the outputm an optocoupler is recommended
+        ;Here, the Timer0 is also adjusted with a 256 prescalar, and global interrupts are disabled
+        
                 bcf     ESTADO, RP1
                 bsf     ESTADO, RP0
                 movlw   b'00011110'
@@ -54,6 +59,10 @@ RP1         EQU 0x06
         ;Los bloques 'newp#' se usan para ingresar una contraseña nueva
         ;Esto sólo ocurre la primera vez que inicia el programa, o tras un RESET del microcontrolador
         ;Además, 'newp#r' indica que la siguiente instrucción no se debe ejecutar hasta soltar (Release) el boton
+        
+        ;'newp#' blocks are used to enter a new password
+        ;This only happens the first time the program is loaded, or after a RESET of the microcontroller
+        ;Besides, 'newp#r' makes sure that the next instruction is not executed before the button is released
         
         newp0   btfss   PUEA,1
                 goto    newp0
@@ -86,6 +95,10 @@ RP1         EQU 0x06
         ;Los bloques 'paso#' permiten que la contraseña sea ingresada
         ;La operación XOR es usada para comprobar si el valor ingresado es igual al almacenado
         ;Si lo son, el resultado de la operación será 0, lo que activará el bit Z (2) del registro ESTADO
+        
+        ;The 'paso#' blocks allow the password to be entered
+        ;The XOR operation is used to check if the submitted value is the same as the saved one
+        ;If they are equal, the XOR will return a 0, which will activate the bit Z (2) from the STATUS register
            
         paso0   bcf     PUEA,0
                 btfss   PUEA,1
@@ -135,6 +148,12 @@ RP1         EQU 0x06
         ;Con un predivisor de 256 y un oscilador de 4 MHz, el desbordamiento ocurre en ~1/16 s
         ;Esto se obtiene de la fórmula TDesborde = TOsc * 4 * (256 - TMR0) * Predivisor
         ;Para cinco segundos, es necesario desbordar el TIMER0 ~76 veces
+        
+        ;Delay Subrutine(5s)
+        ;To count five seconds, the easiest method is to overflow the TIMER0 many times
+        ;With a prescalar of 256 and an oscillator of 4 MHz, the overflow occurs in ~1/16 s
+        ;This value comes from the formula TOverflow = TOsc * 4 * (256 - TMR0) * Prescalar
+        ;For five seconds, it's necessary to overflow the TIMER0 ~76 veces
         
         cincos  btfss   INTCON, T0IF
                 goto    cincos
