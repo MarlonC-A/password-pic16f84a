@@ -12,7 +12,7 @@ Al encender el microcontrolador, este se encuentra inicialmente en estado desblo
 
 El proyecto se encuentra listo para modificar y compilar. El compilador de este ensamblador es *mpasm*, el cual puede usarse de manera independiente, o encontrarse en el software *MPLAB* de *Microchip*. Convenientemente, el repositorio está ya organizado para ser cargado directamente a MPLAB, sólo es necesario clonar el repositorio o descargarlo en ZIP, y abrirlo con MPLAB (El IDE ignorará automáticamente el diagrama y este archivo).
 
-[Aquí se muestra un diagrama esquemático que muestra el ejemplo de circuito de aplicación con el microcontrolador:](#esquema/schematic)
+[Aquí se muestra un diagrama esquemático que muestra el ejemplo de circuito de aplicación con el microcontrolador:](#esquemaschematic)
 
 ---
 
@@ -28,10 +28,10 @@ When the microcontroller is started, it is initially unlocked. In this state it 
 
 The project is ready to modify and compile. The compiler of this assembly is *mpasm*, which can be used independently, or can be found in the software *MPLAB* of *Microchip*. Conveniently, this repository is already organized to be loaded to MPLAB, it's just necessary to clone the repo or download it as ZIP, and loading it with MPLAB (The IDE will ignore this file and the schematic).
 
-[You can find a schematic with an example circuit application using the microcontroller here:](#esquema/schematic)
+[You can find a schematic with an example circuit application using the microcontroller here:](#esquemaschematic)
 
 ---
 
-# Esquema/Schematic
+# EsquemaSchematic
 
 ![Esquema](Esq.png)
